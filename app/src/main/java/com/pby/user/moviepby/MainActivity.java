@@ -28,8 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -104,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // All your networking logic
                 // should be here
-                String clientId = "IT9hEd58EVBQaYX18Ot4";
-                String clientSecret = "MZTgAOHFee";
+                String clientId = "";
+                String clientSecret = "";
 
                 URL apiEndpoint = null;
                 try {
@@ -357,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return mLinkArrayList.size();
+            return mCachedMovies.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
