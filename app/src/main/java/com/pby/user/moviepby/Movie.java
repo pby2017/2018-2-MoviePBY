@@ -5,25 +5,25 @@ import android.support.annotation.Nullable;
 
 public final class Movie {
     @Nullable
-    private String mLink;
+    private String link;
 
     @Nullable
-    private String mTitle;
+    private String title;
 
     @Nullable
-    private Bitmap mImage;
+    private Bitmap image;
 
     @Nullable
-    private String mUserRating;
+    private String userRating;
 
     @Nullable
-    private String mPubDate;
+    private String pubDate;
 
     @Nullable
-    private String mDirector;
+    private String director;
 
     @Nullable
-    private String mActor;
+    private String actor;
 
     public Movie() {
     }
@@ -31,47 +31,47 @@ public final class Movie {
     public Movie(@Nullable String link, @Nullable Bitmap image,
                  @Nullable String title, @Nullable String userRating,
                  @Nullable String pubDate, @Nullable String director, @Nullable String actor) {
-        mLink = link;
-        mTitle = title;
-        mImage = image;
-        mUserRating = userRating;
-        mPubDate = pubDate;
-        mDirector = director;
-        mActor = actor;
+        this.link = link;
+        this.title = title;
+        this.image = image;
+        this.userRating = userRating;
+        this.pubDate = pubDate;
+        this.director = director;
+        this.actor = actor;
     }
 
     @Nullable
     public String getmLink() {
-        return mLink;
+        return link;
     }
 
     @Nullable
     public String getmTitle() {
-        return mTitle;
+        return title;
     }
 
     @Nullable
     public Bitmap getmImage() {
-        return mImage;
+        return image;
     }
 
     @Nullable
     public String getmUserRating() {
-        return mUserRating;
+        return userRating;
     }
 
     @Nullable
     public String getmPubDate() {
-        return mPubDate;
+        return pubDate;
     }
 
     @Nullable
     public String getmDirector() {
-        return mDirector;
+        return director;
     }
 
     @Nullable
     public String getmActor() {
-        return mActor;
+        return actor;
     }
 }
