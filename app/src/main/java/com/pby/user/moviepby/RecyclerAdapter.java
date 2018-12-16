@@ -21,6 +21,9 @@ import java.util.Map;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
+    final static String TAGBEFORE = "before";
+    final static String TAGAFTER = "after";
+
     private Context mContext;
     private Map<Integer, Movie> mCachedMovies;
     private ArrayList<String> mLinkArrayList;
@@ -32,7 +35,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<String> mActorArrayList;
 
     public RecyclerAdapter(Context context, Map<Integer, Movie> cachedMovies) {
-        Log.d("test-new Adapter", "before");
+        Log.d("test-new Adapter", TAGBEFORE);
         mContext = context;
 
         mCachedMovies = cachedMovies;
@@ -48,7 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     public void loadMovieToArrayList() {
-        Log.d("test-loadMovie", mCachedMovies.size() + "before");
+        Log.d("test-loadMovie", mCachedMovies.size() + TAGBEFORE);
         Iterator<Movie> movieListCopy = mCachedMovies.values().iterator();
         while (movieListCopy.hasNext()) {
             Movie mealCopy = movieListCopy.next();
@@ -59,18 +62,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             mPubDateArrayList.add(mealCopy.getmPubDate());
             mDirectorArrayList.add(mealCopy.getmDirector());
             mActorArrayList.add(mealCopy.getmActor());
-            Log.d("test-loadMovie", "after");
+            Log.d("test-loadMovie", TAGAFTER);
         }
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Log.d("test-onCreateViewHolder", "before");
+        Log.d("test-onCreateViewHolder", TAGBEFORE);
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_cardmovie, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(v);
-        Log.d("test-onCreateViewHolder", "after");
+        Log.d("test-onCreateViewHolder", TAGAFTER);
         return viewHolder;
     }
 
@@ -92,10 +95,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.mImageViewImage.setImageResource(R.drawable.ic_launcher_background);
         }
         holder.mTextViewTitle.setText(Html.fromHtml(mTitleArrayList.get(position)));
-        holder.mTextViewUserRating.setText(mUserRatingArrayList.get(position));
-        holder.mTextViewPubDate.setText(mPubDateArrayList.get(position));
-        holder.mTextViewDirector.setText(mDirectorArrayList.get(position));
-        holder.mTextViewActor.setText(mActorArrayList.get(position));
+        holder.mTextViewUserRating.setText(Html.fromHtml(mUserRatingArrayList.get(position)));
+        holder.mTextViewPubDate.setText(Html.fromHtml(mPubDateArrayList.get(position)));
+        holder.mTextViewDirector.setText(Html.fromHtml(mDirectorArrayList.get(position)));
+        holder.mTextViewActor.setText(Html.fromHtml(mActorArrayList.get(position)));
         Log.d("test-onBindViewHolder", mDirectorArrayList.get(position) + "after1");
         Log.d("test-onBindViewHolder", holder.mTextViewDirector.getText() + "after2");
     }

@@ -35,6 +35,17 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mRecyclerViewLayoutManager;
     private RecyclerView.Adapter mRecyclerViewAdapter;
 
+    final static String IMAGE = "image";
+    final static String LINK = "link";
+    final static String TITLE = "title";
+    final static String USERRATING = "userRating";
+    final static String PUBDATE = "pubDate";
+    final static String DIRECTOR = "director";
+    final static String ACTOR = "actor";
+
+    final static String TAGBEFORE = "before";
+    final static String TAGAFTER = "after";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 callMovieSearchAPI();
 
                 try {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -65,26 +76,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public final void setRecyclerAdapter(RecyclerView.Adapter recyclerAdapter) {
-        Log.d("test-setRecyclerAdapter", "before");
+        Log.d("test-setRecyclerAdapter", TAGBEFORE);
         mRecyclerViewAdapter = recyclerAdapter;
-        Log.d("test-setRecyclerAdapter", mRecyclerViewAdapter + "after");
+        Log.d("test-setRecyclerAdapter", mRecyclerViewAdapter + TAGAFTER);
     }
 
     public final void setRecyclerView() {
-        Log.d("test-setRecyclerView", "before");
+        Log.d("test-setRecyclerView", TAGBEFORE);
         mRecyclerViewLayoutManager = new LinearLayoutManager(this);
         mRcyclerViewMovieList.setLayoutManager(mRecyclerViewLayoutManager);
         mRcyclerViewMovieList.setAdapter(mRecyclerViewAdapter);
-        Log.d("test-setRecyclerView", mRecyclerViewAdapter + "after");
+        Log.d("test-setRecyclerView", mRecyclerViewAdapter + TAGAFTER);
     }
 
     public final void refreshRecyclerView() {
-        Log.d("test-refresh", "before");
+        Log.d("test-refresh", TAGBEFORE);
         mRecyclerViewAdapter.notifyDataSetChanged();
-        Log.d("test-refresh", mRecyclerViewAdapter + "after");
+        Log.d("test-refresh", mRecyclerViewAdapter + TAGAFTER);
     }
 
-    private String getMoviewSearchURL() throws UnsupportedEncodingException {
+    private String getMovieSearchURL() throws UnsupportedEncodingException {
         String movieSearchText = mEditTextMovieSearch.getText().toString();
         Log.d("test-movieSearchText", movieSearchText);
         String text = URLEncoder.encode(movieSearchText, "UTF-8");
@@ -108,38 +119,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Map<Integer, Movie> makeCachedMoviesForRecycle(JSONArray movieList) throws JSONException, IOException {
-        JSONObject movie = null;
-        String image = null;
-        URL imageURL = null;
-        HttpURLConnection myConnection = null;
-        Bitmap bmp = null;
-        Movie movieModel = null;
-
         Map<Integer, Movie> mCachedMovies = new LinkedHashMap<>();
 
         for (int movieListIdx = 0; movieListIdx < movieList.length(); ++movieListIdx) {
-            movie = movieList.getJSONObject(movieListIdx);
-            image = movie.getString("image");
-            if (image.length() > 1) {
-                imageURL = new URL(movie.getString("image"));
-                myConnection = (HttpURLConnection) imageURL.openConnection();
-                bmp = BitmapFactory.decodeStream(myConnection.getInputStream());
-            } else {
-                bmp = null;
-            }
+            JSONObject movie = movieList.getJSONObject(movieListIdx);
 
-            movieModel = new Movie(
-                    movie.getString("link"),
-                    bmp,
-                    movie.getString("title"),
-                    movie.getString("userRating"),
-                    movie.getString("pubDate"),
-                    movie.getString("director"),
-                    movie.getString("actor"));
+            Bitmap bmp = find(movie);
+
+            Movie movieModel = makeMovie(movie, bmp);
+
             mCachedMovies.put(movieListIdx, movieModel);
         }
 
         return mCachedMovies;
+    }
+
+    private Bitmap find(JSONObject movie) throws JSONException, IOException {
+        String image = movie.getString(IMAGE);
+        if (image.length() > 1) {
+            URL imageURL = new URL(image);
+            HttpURLConnection myConnection = (HttpURLConnection) imageURL.openConnection();
+            return BitmapFactory.decodeStream(myConnection.getInputStream());
+        }
+        return null;
+    }
+
+    private Movie makeMovie(JSONObject movie, Bitmap bmp) throws JSONException {
+
+        return new Movie(
+                movie.getString(LINK),
+                bmp,
+                movie.getString(TITLE),
+                movie.getString(USERRATING),
+                movie.getString(PUBDATE),
+                movie.getString(DIRECTOR),
+                movie.getString(ACTOR));
     }
 
     private void callMovieSearchAPI() {
@@ -148,18 +162,14 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // All your networking logic
                 // should be here
-
-                URL apiEndpoint = null;
                 BufferedReader br = null;
-
-                HttpURLConnection myConnection = null;
 
                 try {
                     // Create URL
                     // 클라우드 url에는 port를 안붙인다.
-                    apiEndpoint = new URL(getMoviewSearchURL());
+                    URL apiEndpoint = new URL(getMovieSearchURL());
 
-                    myConnection = makeMovieSearchConnection(apiEndpoint);
+                    HttpURLConnection myConnection = makeMovieSearchConnection(apiEndpoint);
 
                     int responseCode = myConnection.getResponseCode();
 
@@ -190,14 +200,14 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("test-runOnUiThread", "before");
+                            Log.d("test-runOnUiThread", TAGBEFORE);
 
                             mRecyclerViewAdapter = new RecyclerAdapter(getApplicationContext(), mCachedMovies);
 
                             setRecyclerAdapter(mRecyclerViewAdapter);
                             setRecyclerView();
                             refreshRecyclerView();
-                            Log.d("test-runOnUiThread", "after");
+                            Log.d("test-runOnUiThread", TAGAFTER);
                         }
                     });
 
