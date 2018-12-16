@@ -7,6 +7,7 @@ public final class Movie {
     @Nullable
     private String link;
 
+
     @Nullable
     private String title;
 
