@@ -35,16 +35,16 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mRecyclerViewLayoutManager;
     private RecyclerView.Adapter mRecyclerViewAdapter;
 
-    final static String IMAGE = "image";
-    final static String LINK = "link";
-    final static String TITLE = "title";
-    final static String USERRATING = "userRating";
-    final static String PUBDATE = "pubDate";
-    final static String DIRECTOR = "director";
-    final static String ACTOR = "actor";
+    private final static String IMAGE = "image";
+    private final static String LINK = "link";
+    private final static String TITLE = "title";
+    private final static String USERRATING = "userRating";
+    private final static String PUBDATE = "pubDate";
+    private final static String DIRECTOR = "director";
+    private final static String ACTOR = "actor";
 
-    final static String TAGBEFORE = "before";
-    final static String TAGAFTER = "after";
+    private final static String TAGBEFORE = "before";
+    private final static String TAGAFTER = "after";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

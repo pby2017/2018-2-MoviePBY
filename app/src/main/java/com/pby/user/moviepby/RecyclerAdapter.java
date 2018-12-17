@@ -21,8 +21,8 @@ import java.util.Map;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    final static String TAGBEFORE = "before";
-    final static String TAGAFTER = "after";
+    private final static String TAGBEFORE = "before";
+    private final static String TAGAFTER = "after";
 
     private Context mContext;
     private Map<Integer, Movie> mCachedMovies;
@@ -83,7 +83,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.mLinearLayoutMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mLinkArrayList.get(position).equals("")){
+                if (!mLinkArrayList.get(position).equals("")) {
                     CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                     CustomTabsIntent customTabsIntent = builder.build();
                     customTabsIntent.launchUrl(mContext, Uri.parse(mLinkArrayList.get(position)));
