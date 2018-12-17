@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private HttpURLConnection makeMovieSearchConnection(URL apiEndPoint) throws IOException {
-        String clientId = "IT9hEd58EVBQaYX18Ot4";
-        String clientSecret = "MZTgAOHFee";
+        String clientId = "";
+        String clientSecret = "";
         HttpURLConnection myConnection =
                 (HttpURLConnection) apiEndPoint.openConnection();
 
