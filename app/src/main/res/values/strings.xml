@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">MoviePBY</string>
-    <string name="text_movie_search"></string>
-    <string name="button_movie_search">검색</string>
-    <string name="text_blank"></string>
-</resources>
